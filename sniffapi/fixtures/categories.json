@@ -1,0 +1,23 @@
+[
+    {
+      "model": "sniffapi.category",
+      "pk": 1,
+      "fields": {
+        "name": "Floral"
+      }
+    },
+    {
+      "model": "sniffapi.category",
+      "pk": 2,
+      "fields": {
+        "name": "Woody"
+      }
+    },
+    {
+      "model": "sniffapi.category",
+      "pk": 3,
+      "fields": {
+        "name": "Citrus"
+      }
+    }
+  ]

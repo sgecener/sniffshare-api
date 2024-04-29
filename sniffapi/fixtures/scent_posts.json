@@ -1,0 +1,38 @@
+[
+    {
+      "model": "sniffapi.scentpost",
+      "pk": 1,
+      "fields": {
+        "user": 1,
+        "title": "Rose Bouquet",
+        "description": "A beautiful floral scent with notes of rose and jasmine.",
+        "category": 1,
+        "created_at": "2023-04-26T12:00:00Z",
+        "updated_at": "2023-04-26T12:00:00Z"
+      }
+    },
+    {
+      "model": "sniffapi.scentpost",
+      "pk": 2,
+      "fields": {
+        "user_id": 2,
+        "title": "Sandalwood Embrace",
+        "description": "A warm and woody scent with hints of sandalwood and vanilla.",
+        "category": 2,
+        "created_at": "2023-04-25T14:30:00Z",
+        "updated_at": "2023-04-25T14:30:00Z"
+      }
+    },
+    {
+      "model": "sniffapi.scentpost",
+      "pk": 3,
+      "fields": {
+        "user_id": 3,
+        "title": "Lemon Zest",
+        "description": "A refreshing citrus scent with a burst of lemon and grapefruit.",
+        "category": 3,
+        "created_at": "2023-04-24T09:15:00Z",
+        "updated_at": "2023-04-24T09:15:00Z"
+      }
+    }
+  ]

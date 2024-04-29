@@ -1,0 +1,23 @@
+[
+    {
+      "model": "sniffapi.tag",
+      "pk": 1,
+      "fields": {
+        "name": "Rose"
+      }
+    },
+    {
+      "model": "sniffapi.tag",
+      "pk": 2,
+      "fields": {
+        "name": "Sandalwood"
+      }
+    },
+    {
+      "model": "sniffapi.tag",
+      "pk": 3,
+      "fields": {
+        "name": "Lemon"
+      }
+    }
+  ]
