@@ -1,14 +1,13 @@
 from rest_framework import serializers, viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from sniffapi.models import ScentPost
+from sniffapi.models import ScentPost, Category
 from .categories import CategorySerializer
 from .tags import TagSerializer
 
 class ScentPostSerializer(serializers.ModelSerializer):
 
-    # is_owner = serializers.SerializerMethodField()
-    category = CategorySerializer(many=False)
+    is_owner = serializers.SerializerMethodField()
     tags = TagSerializer(many=True)
 
     def get_is_owner(self, obj):
@@ -17,7 +16,7 @@ class ScentPostSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = ScentPost
-        fields = ['id', 'user', 'title', 'description', 'category', 'tags', 'created_at', 'updated_at', 'category']
+        fields = ['id', 'user', 'is_owner', 'title', 'description', 'category', 'tags', 'created_at', 'updated_at']
 
 class ScentPostViewSet(viewsets.ModelViewSet):
     queryset = ScentPost.objects.all()
@@ -42,7 +41,10 @@ class ScentPostViewSet(viewsets.ModelViewSet):
         # Get the data from the client's JSON payload
         title = request.data.get('title')
         description = request.data.get('description')
-        category = request.data.get('category')
+        category_name = request.data.get('category')
+    
+        # Retrieve or create the Category instance
+        category, _ = Category.objects.get_or_create(name=category_name)
         # Create a scent database row first, so you have a
         # primary key to work with
         scent = ScentPost.objects.create(
@@ -55,7 +57,8 @@ class ScentPostViewSet(viewsets.ModelViewSet):
         # Establish the many-to-many relationships
         
 
-        tag_ids = request.data.get('tags', [])
+        tags_data = request.data.get('tags', [])
+        tag_ids = [tag_data['id'] for tag_data in tags_data if 'id' in tag_data]
         scent.tags.set(tag_ids)
         
 
