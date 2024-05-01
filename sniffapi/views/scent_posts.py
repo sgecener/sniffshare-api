@@ -2,7 +2,6 @@ from rest_framework import serializers, viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from sniffapi.models import ScentPost, Category
-from .categories import CategorySerializer
 from .tags import TagSerializer
 
 class ScentPostSerializer(serializers.ModelSerializer):
