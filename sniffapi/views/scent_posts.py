@@ -40,10 +40,10 @@ class ScentPostViewSet(viewsets.ModelViewSet):
         # Get the data from the client's JSON payload
         title = request.data.get('title')
         description = request.data.get('description')
-        category_name = request.data.get('category')
+        category_id = request.data.get('category')
     
         # Retrieve or create the Category instance
-        category = Category.objects.get(name=category_name)
+        category = Category.objects.get(id=category_id)
         # Create a scent database row first, so you have a
         # primary key to work with
         scent = ScentPost.objects.create(
