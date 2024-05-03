@@ -5,21 +5,48 @@ from rest_framework import serializers, status
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
-from sniffapi.models import ScentUser
+from sniffapi.models import ScentUser, Favorite
+from sniffapi.views import ScentPostSerializer
+
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'first_name', 'last_name', 'email')
+        depth = 1
 
-class ProfileSerializer(serializers.ModelSerializer):
+class ScentUserSerializer(serializers.ModelSerializer):
+    """JSON serializer for recommendation customers"""
 
     user = UserSerializer()
 
     class Meta:
-        model = User
-        fields = ('id', 'url', 'user' )
+        model = ScentUser
+        fields = (
+            "id",
+            "user",
+        )
+
+
+class FavoriteSerializer(serializers.ModelSerializer):
+
+    scent_post = ScentPostSerializer()
+
+    class Meta:
+        model = Favorite
+        fields = ['id', 'scent_user', 'scent_post']
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+
+    user = UserSerializer(many=False)
+    favorite_posts = FavoriteSerializer(many= True)
+
+    class Meta:
+        model = ScentUser
+        fields = ('id', 'url', 'user', 'favorite_posts')
+        depth = 1
 
 
 
@@ -31,6 +58,7 @@ class Profile(ViewSet):
         
         try:
             current_user = ScentUser.objects.get(user=request.auth.user)
+            current_user.favorite_posts = Favorite.objects.filter(scent_user=current_user)
 
             serializer = ProfileSerializer(
                     current_user, many=False, context={"request": request}

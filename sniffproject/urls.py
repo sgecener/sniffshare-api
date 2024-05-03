@@ -3,8 +3,6 @@ from django.urls import include, path
 from django.conf.urls.static import static
 from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
-
-
 from sniffapi.models import *
 from sniffapi.views import *
 from sniffapi.views.register import register_user, login_user
@@ -13,11 +11,12 @@ router = routers.DefaultRouter(trailing_slash=False)
 router.register(r"categories", CategoryViewSet, "category")
 router.register(r"favorites", FavoriteViewSet, "favorite")
 router.register(r"tags", TagViewSet, "tag")
-router.register(r"scent_posts", ScentPostViewSet, "scent_post")
-router.register(r"scent_review", ScentReviewViewSet, "scent_review")
-router.register(r"scent_tags", ScentTagViewSet, "scent_tag")
+router.register(r"scent_posts", ScentPostViewSet, "scentpost")
+router.register(r"scent_review", ScentReviewViewSet, "scentreview")
+router.register(r"scent_tags", ScentTagViewSet, "scenttag")
 router.register(r"users", Users, "user")
 router.register(r"profile", Profile, "profile")
+router.register(r"scent_users", ScentUserViewSet, "scentuser")
 
 
 
