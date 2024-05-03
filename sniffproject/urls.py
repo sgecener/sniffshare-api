@@ -17,6 +17,7 @@ router.register(r"scent_posts", ScentPostViewSet, "scent_post")
 router.register(r"scent_review", ScentReviewViewSet, "scent_review")
 router.register(r"scent_tags", ScentTagViewSet, "scent_tag")
 router.register(r"users", Users, "user")
+router.register(r"profile", Profile, "profile")
 
 
 

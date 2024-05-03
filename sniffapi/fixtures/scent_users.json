@@ -1,0 +1,23 @@
+[
+    {
+      "model": "sniffapi.scentuser",
+      "pk": 1,
+      "fields": {
+        "user": 1
+      }
+    },
+    {
+      "model": "sniffapi.scentuser",
+      "pk": 2,
+      "fields": {
+        "user": 2
+      }
+    },
+    {
+      "model": "sniffapi.scentuser",
+      "pk": 3,
+      "fields": {
+        "user": 3
+      }
+    }
+  ]

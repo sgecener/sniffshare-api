@@ -12,4 +12,5 @@ python3 manage.py loaddata scent_posts
 python3 manage.py loaddata favorites
 python3 manage.py loaddata scent_tags
 python3 manage.py loaddata scent_reviews
+python3 manage.py loaddata scent_users
 python3 manage.py loaddata tokens

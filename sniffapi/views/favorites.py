@@ -5,7 +5,7 @@ from sniffapi.models import Favorite
 class FavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
-        fields = ['id', 'user', 'scent_post', 'created_at']
+        fields = ['id', 'user', 'scent_post']
 
 class FavoriteViewSet(viewsets.ModelViewSet):
     queryset = Favorite.objects.all()

@@ -43,7 +43,7 @@ class ScentPostViewSet(viewsets.ModelViewSet):
         category_id = request.data.get('category')
     
         # Retrieve or create the Category instance
-        category = Category.objects.get(id=category_id)
+        category = Category.objects.get(pk=category_id)
         # Create a scent database row first, so you have a
         # primary key to work with
         scent = ScentPost.objects.create(

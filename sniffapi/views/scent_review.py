@@ -5,7 +5,7 @@ from sniffapi.models import ScentReview
 class ScentReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = ScentReview
-        fields = ['id', 'user', 'scent_post', 'rating', 'comment', 'created_at']
+        fields = ['id', 'user_id', 'scent_post_id', 'rating', 'comment']
 
 class ScentReviewViewSet(viewsets.ModelViewSet):
     queryset = ScentReview.objects.all()
