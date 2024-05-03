@@ -1,8 +1,9 @@
 from rest_framework import serializers, viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from sniffapi.models import ScentPost, Category
+from sniffapi.models import ScentPost, Category, ScentUser, Favorite
 from .tags import TagSerializer
+from rest_framework.decorators import action
 
 class ScentPostSerializer(serializers.ModelSerializer):
 
@@ -106,6 +107,42 @@ class ScentPostViewSet(viewsets.ModelViewSet):
 
         except ScentPost.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        
+    @action(methods=["post"], detail=True)
+    def like(self, request, pk=None):
+        """Like Products"""
 
+        if request.method == "POST":
+            try:
+                scent_post = ScentPost.objects.get(pk=pk)
+                scent_user = ScentUser.objects.get(user=request.auth.user)
+                if not Favorite.objects.filter(scent_user=scent_user, scent_post=scent_post).exists():
+                    favorite = Favorite(scent_user=scent_user, scent_post=scent_post)
+                    favorite.save()
 
-# Is this update method correct if so, what is the appropriate PUT body format to test this on Postman
+                    return Response({"message": "Scent liked successfully"}, status=status.HTTP_200_OK)
+                else:
+                    return Response({"message": "Scent already liked"}, status=status.HTTP_400_BAD_REQUEST)
+            except ScentPost.DoesNotExist:
+                return Response({"error": "Scent not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response(None, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    @action(methods=["delete"], detail=True)
+    def unlike(self, request, pk=None):
+        """Unlike Products"""
+
+        if request.method == "DELETE":
+            try:
+                scent_post = ScentPost.objects.get(pk=pk)
+                scent_user = ScentUser.objects.get(user=request.auth.user)
+                favorite = Favorite.objects.filter(scent_user=scent_user, scent_post=scent_post)
+                if favorite.exists():
+                    favorite.delete()
+                    return Response({"message": "Scent unliked successfully"}, status=status.HTTP_204_NO_CONTENT)
+                else:
+                    return Response({"message": "Scent not liked by the user"}, status=status.HTTP_400_BAD_REQUEST)
+            except ScentPost.DoesNotExist:
+                return Response({"error": "Scent not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response(None, status=status.HTTP_405_METHOD_NOT_ALLOWED)
