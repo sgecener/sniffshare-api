@@ -1,7 +1,7 @@
 from rest_framework import serializers, viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from sniffapi.models import ScentPost, Category, ScentUser, Favorite
+from sniffapi.models import ScentPost, Category, ScentUser, Favorite, Tag
 from .tags import TagSerializer
 from rest_framework.decorators import action
 
@@ -57,9 +57,19 @@ class ScentPostViewSet(viewsets.ModelViewSet):
         # Establish the many-to-many relationships
         
 
+        # tag_ids = request.data.get('tags', [])
+        # scent.tags.set(tag_ids)
+
         tags_data = request.data.get('tags', [])
-        tag_ids = [tag_data['id'] for tag_data in tags_data if 'id' in tag_data]
-        scent.tags.set(tag_ids)
+        tag_names = [tag_data['name'] for tag_data in tags_data if 'name' in tag_data]
+
+
+        for tag_name in tag_names:
+        # Check if the tag already exists
+            tag, created = Tag.objects.get_or_create(name=tag_name)
+            # If it's a new tag, add it to the scent's tags
+            if created:
+                scent.tags.add(tag)
         
 
         serializer = ScentPostSerializer(scent, context={'request': request})
@@ -81,14 +91,15 @@ class ScentPostViewSet(viewsets.ModelViewSet):
                 scent.title = serializer.validated_data['title']
                 scent.description = serializer.validated_data['description']
 
-                category_name = request.data.get('category')
-                category = Category.objects.get(name=category_name)
+                category_id = request.data.get('category')
+                category = Category.objects.get(pk=category_id)
                 scent.category = category
-                scent.save()
+                
 
                 tags_data = request.data.get('tags', [])
                 tag_ids = [tag_data['id'] for tag_data in tags_data if 'id' in tag_data]
                 scent.tags.set(tag_ids)
+                scent.save()
 
                 return Response(None, status.HTTP_204_NO_CONTENT)
 

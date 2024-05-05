@@ -5,7 +5,7 @@ from sniffapi.models import ScentTag
 class ScentTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = ScentTag
-        fields = ['id', 'scent_post_id', 'tag_id']
+        fields = ['id', 'scent_post', 'tag']
 
 
 class ScentTagViewSet(viewsets.ModelViewSet):
