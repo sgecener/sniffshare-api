@@ -57,8 +57,7 @@ class ScentPostViewSet(viewsets.ModelViewSet):
         # Establish the many-to-many relationships
         
 
-        tags_data = request.data.get('tags', [])
-        tag_ids = [tag_data['id'] for tag_data in tags_data if 'id' in tag_data]
+        tag_ids = request.data.get('tags', [])
         scent.tags.set(tag_ids)
         
 
@@ -81,8 +80,8 @@ class ScentPostViewSet(viewsets.ModelViewSet):
                 scent.title = serializer.validated_data['title']
                 scent.description = serializer.validated_data['description']
 
-                category_name = request.data.get('category')
-                category = Category.objects.get(name=category_name)
+                category_id = request.data.get('category')
+                category = Category.objects.get(id=category_id)
                 scent.category = category
                 scent.save()
 
