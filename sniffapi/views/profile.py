@@ -70,7 +70,8 @@ class Profile(ViewSet):
         
     def destroy(self, request, pk=None):
 
-        current_user = User.objects.get(pk=pk)
+        current_user = ScentUser.objects.get(pk=pk)
+        self.check_object_permissions(request, current_user)
         current_user.delete()
 
         return Response({}, status=status.HTTP_204_NO_CONTENT)

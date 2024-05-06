@@ -91,8 +91,8 @@ class ScentPostViewSet(viewsets.ModelViewSet):
                 scent.title = serializer.validated_data['title']
                 scent.description = serializer.validated_data['description']
 
-                category_id = request.data.get('category')
-                category = Category.objects.get(pk=category_id)
+                category_name = request.data.get('category')
+                category = Category.objects.get(name=category_name)
                 scent.category = category
                 
 

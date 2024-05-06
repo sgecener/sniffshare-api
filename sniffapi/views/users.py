@@ -26,14 +26,23 @@ class Users(viewsets.ViewSet):
         except Exception as ex:
             return HttpResponseServerError(ex)
 
-
-
     def list(self, request):
         """Handle GET requests to user resource"""
         users = User.objects.all()
         serializer = UserSerializer(
             users, many=True, context={'request': request})
         return Response(serializer.data)
+    
+    def destroy(self, request, pk=None):
+        try:
+            user = User.objects.get(pk=pk)
+            self.check_object_permissions(request, user)
+            user.delete()
+
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        except User.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 # class UserViewSet(viewsets.ViewSet):
