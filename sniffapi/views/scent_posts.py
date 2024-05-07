@@ -44,7 +44,7 @@ class ScentPostViewSet(viewsets.ModelViewSet):
         category_id = request.data.get('category')
     
         # Retrieve or create the Category instance
-        category = Category.objects.get(pk=category_id)
+        category = Category.objects.get(id=category_id)
         # Create a scent database row first, so you have a
         # primary key to work with
         scent = ScentPost.objects.create(
@@ -68,7 +68,7 @@ class ScentPostViewSet(viewsets.ModelViewSet):
         # Check if the tag already exists
             tag, created = Tag.objects.get_or_create(name=tag_name)
             # If it's a new tag, add it to the scent's tags
-            if created:
+            if tag or created:
                 scent.tags.add(tag)
         
 
@@ -91,16 +91,21 @@ class ScentPostViewSet(viewsets.ModelViewSet):
                 scent.title = serializer.validated_data['title']
                 scent.description = serializer.validated_data['description']
 
-                category_name = request.data.get('category')
-                category = Category.objects.get(name=category_name)
+                category_id = request.data.get('category')
+                category = Category.objects.get(id=category_id)
                 scent.category = category
                 
 
                 tags_data = request.data.get('tags', [])
-                tag_ids = [tag_data['id'] for tag_data in tags_data if 'id' in tag_data]
-                scent.tags.set(tag_ids)
-                scent.save()
+                tag_names = [tag_data['name'] for tag_data in tags_data if 'name' in tag_data]
 
+
+                for tag_name in tag_names:
+                # Check if the tag already exists
+                    tag, created = Tag.objects.get_or_create(name=tag_name)
+                    # If it's a new tag, add it to the scent's tags
+                    if tag or created:
+                        scent.tags.add(tag)
                 return Response(None, status.HTTP_204_NO_CONTENT)
 
             return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
