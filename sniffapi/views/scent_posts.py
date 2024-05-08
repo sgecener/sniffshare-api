@@ -1,7 +1,7 @@
 from rest_framework import serializers, viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from sniffapi.models import ScentPost, Category, ScentUser, Favorite, Tag
+from sniffapi.models import ScentPost, Category, ScentUser, Favorite, Tag, ScentTag
 from .tags import TagSerializer
 from rest_framework.decorators import action
 
@@ -80,7 +80,6 @@ class ScentPostViewSet(viewsets.ModelViewSet):
 
             scent = ScentPost.objects.get(pk=pk)
             
-
             # Is the authenticated user allowed to edit this book?
             if scent.user != request.user:
                 return Response({"detail": "You do not have permission to update this scent post."}, status=status.HTTP_403_FORBIDDEN)
@@ -100,12 +99,21 @@ class ScentPostViewSet(viewsets.ModelViewSet):
                 tag_names = [tag_data['name'] for tag_data in tags_data if 'name' in tag_data]
 
 
+                 # Retrieve the existing tag instances associated with the scent post
+                existing_tags = scent.tags.all()
+
+            # Remove tag instances that are not present in the new tag names
+                tags_to_remove = existing_tags.exclude(name__in=tag_names)
+                scent.tags.remove(*tags_to_remove)
+
+            # Add any new tag instances that are not already associated with the scent post
                 for tag_name in tag_names:
-                # Check if the tag already exists
-                    tag, created = Tag.objects.get_or_create(name=tag_name)
-                    # If it's a new tag, add it to the scent's tags
-                    if tag or created:
+                    tag, _ = Tag.objects.get_or_create(name=tag_name)
+                    if tag not in existing_tags:
                         scent.tags.add(tag)
+
+                scent.save()
+
                 return Response(None, status.HTTP_204_NO_CONTENT)
 
             return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
