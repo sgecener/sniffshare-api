@@ -6,6 +6,12 @@ from rest_framework.authtoken.views import obtain_auth_token
 from sniffapi.models import *
 from sniffapi.views import *
 from sniffapi.views.register import register_user, login_user
+from apscheduler.schedulers.background import BackgroundScheduler
+
+scheduler = BackgroundScheduler()
+
+from django_apscheduler.jobstores import register_events, register_job
+
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r"categories", CategoryViewSet, "category")
@@ -27,3 +33,7 @@ urlpatterns = [
     path("api-token-auth", obtain_auth_token),
     path("api-auth", include("rest_framework.urls", namespace="rest_framework")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+register_events(scheduler)
+register_job(scheduler)
