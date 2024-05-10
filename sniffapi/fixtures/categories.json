@@ -1,0 +1,23 @@
+[
+    {
+      "model": "sniffapi.category",
+      "pk": 1,
+      "fields": {
+        "name": "Pleasant"
+      }
+    },
+    {
+      "model": "sniffapi.category",
+      "pk": 2,
+      "fields": {
+        "name": "Rancid"
+      }
+    },
+    {
+      "model": "sniffapi.category",
+      "pk": 3,
+      "fields": {
+        "name": "Daily"
+      }
+    }
+  ]

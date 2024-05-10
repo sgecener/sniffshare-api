@@ -1,0 +1,26 @@
+[
+    {
+      "model": "sniffapi.favorite",
+      "pk": 1,
+      "fields": {
+        "scent_user": 1,
+        "scent_post": 1
+      }
+    },
+    {
+      "model": "sniffapi.favorite",
+      "pk": 2,
+      "fields": {
+        "scent_user": 2,
+        "scent_post": 2
+      }
+    },
+    {
+      "model": "sniffapi.favorite",
+      "pk": 3,
+      "fields": {
+        "scent_user": 3,
+        "scent_post": 3
+      }
+    }
+  ]
