@@ -3,21 +3,21 @@
       "model": "sniffapi.category",
       "pk": 1,
       "fields": {
-        "name": "Floral"
+        "name": "Pleasant"
       }
     },
     {
       "model": "sniffapi.category",
       "pk": 2,
       "fields": {
-        "name": "Woody"
+        "name": "Rancid"
       }
     },
     {
       "model": "sniffapi.category",
       "pk": 3,
       "fields": {
-        "name": "Citrus"
+        "name": "Daily"
       }
     }
   ]

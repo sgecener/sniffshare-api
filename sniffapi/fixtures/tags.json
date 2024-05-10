@@ -1,23 +1,44 @@
 [
-    {
-      "model": "sniffapi.tag",
-      "pk": 1,
-      "fields": {
-        "name": "Rose"
-      }
-    },
-    {
-      "model": "sniffapi.tag",
-      "pk": 2,
-      "fields": {
-        "name": "Sandalwood"
-      }
-    },
-    {
-      "model": "sniffapi.tag",
-      "pk": 3,
-      "fields": {
-        "name": "Lemon"
-      }
+  {
+    "model": "sniffapi.tag",
+    "pk": 1,
+    "fields": {
+      "name": "Floral"
     }
-  ]
+  },
+  {
+    "model": "sniffapi.tag",
+    "pk": 2,
+    "fields": {
+      "name": "Fresh"
+    }
+  },
+  {
+    "model": "sniffapi.tag",
+    "pk": 3,
+    "fields": {
+      "name": "Sweet"
+    }
+  },
+  {
+    "model": "sniffapi.tag",
+    "pk": 4,
+    "fields": {
+      "name": "Musty"
+    }
+  },
+  {
+    "model": "sniffapi.tag",
+    "pk": 5,
+    "fields": {
+      "name": "Citrusy"
+    }
+  },
+  {
+    "model": "sniffapi.tag",
+    "pk": 6,
+    "fields": {
+      "name": "Spicy"
+    }
+  }
+]

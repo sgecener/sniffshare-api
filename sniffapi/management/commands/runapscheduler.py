@@ -42,7 +42,7 @@ class Command(BaseCommand):
         # Schedule the create_scent_post function to run every 30 seconds
         scheduler.add_job(
             create_scent_post,
-            trigger=IntervalTrigger(minutes=2), 
+            trigger=IntervalTrigger(seconds=10), 
             id="create_scent_post",  # The `id` assigned to each job MUST be unique
             max_instances=1,
             replace_existing=True,
